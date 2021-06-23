@@ -34,133 +34,257 @@ def after_request(response):
 
 @app.route('/')
 def index():
-    return 'Casting Agency API'
+    return jsonify({
+        'service': 'Casting Agency API',
+        'version': '1.0',
+        'author': 'Felipe Silveira'
+    })
 
 #  Actors
 #  ----------------------------------------------------------------
 
 @app.route('/actors')
 def get_actors():
-    selection = Actor.query.all()
-    actors = [actor.serialize() for actor in selection]
+    try:
+        selection = Actor.query.all()
+        actors = [actor.serialize() for actor in selection]
 
-    return jsonify({
-        'error': False,
-        'data': actors
-    })
+        return jsonify({
+            'error': False,
+            'data': actors
+        })
+    except BaseException:
+        abort(500)
+
 
 @app.route('/actors/<int:actor_id>')
 def show_actor(actor_id):
-    actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
+    try:
+        actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
+        return jsonify({
+            'error': False,
+            'data': actor.serialize(),
+        })
+    except BaseException:
+        abort(404)
 
-    return jsonify({
-        'error': False,
-        'data': actor.serialize(),
-    })
 
 @app.route('/actors', methods=['POST'])
 def create_actor():
     body = request.get_json()
-    actor = Actor(name=body.get('name'), age=body.get('age'), gender=body.get('gender'))
-    actor.insert()
+    if 'name' not in body:
+        abort(400)
 
-    return jsonify({
-        'error': False,
-        'data': actor.serialize(),
-    })
+    try:
+        actor = Actor(name=body.get('name'), age=body.get('age'), gender=body.get('gender'))
+        actor.insert()
+
+        return jsonify({
+            'error': False,
+            'data': actor.serialize(),
+        })
+    except BaseException:
+        abort(422)
+
 
 @app.route('/actors/<int:actor_id>', methods=['PATCH'])
 def update_actor(actor_id):
     actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
+    if actor is None:
+        abort(404)
 
     body = request.get_json()
-    if 'name' in body:
-        actor.name = body.get('name')
+    if not body:
+        abort(400)
 
-    if 'age' in body:
-        actor.age = body.get('age')
+    try:
+        if 'name' in body:
+            actor.name = body.get('name')
 
-    if 'gender' in body:
-        actor.gender = body.get('gender')
+        if 'age' in body:
+            actor.age = body.get('age')
 
-    actor.update()
+        if 'gender' in body:
+            actor.gender = body.get('gender')
 
-    return jsonify({
-        'error': False,
-        'data': actor.serialize(),
-    })
+        actor.update()
+
+        return jsonify({
+            'error': False,
+            'data': actor.serialize(),
+        })
+
+    except BaseException:
+        abort(400)
+
     
 @app.route('/actors/<int:actor_id>', methods=['DELETE'])
 def delete_actor(actor_id):
     actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
-    actor.delete()
+    if actor is None:
+        abort(404)
 
-    return jsonify({
-        'error': False,
-        deleted: actor_id
-    })
+    try:
+        actor.delete()
+        return jsonify({
+            'error': False,
+            'deleted': actor_id
+        })
+
+    except BaseException:
+        abort(422)
+
 
 #  Movies
 #  ----------------------------------------------------------------
 
 @app.route('/movies')
 def get_movies():
-    selection = Movie.query.all()
-    movies = [movie.serialize() for movie in selection]
+    try:
+        selection = Movie.query.all()
+        movies = [movie.serialize() for movie in selection]
 
-    return jsonify({
-        'error': False,
-        'data': movies
-    })
+        return jsonify({
+            'error': False,
+            'data': movies
+        })
+    except BaseException:
+        abort(500)
+
 
 @app.route('/movies/<int:movie_id>')
 def show_movie(movie_id):
-    movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
+    try:
+        movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
+        return jsonify({
+            'error': False,
+            'data': movie.serialize(),
+        })
 
-    return jsonify({
-        'error': False,
-        'data': movie.serialize(),
-    })
+    except BaseException:
+        abort(404)
+
 
 @app.route('/movies', methods=['POST'])
 def create_movie():
     body = request.get_json()
-    movie = Movie(title=body.get('title'), release_date=body.get('release_date'))
-    movie.insert()
+    if 'title' not in body:
+        abort(400)
 
-    return jsonify({
-        'error': False,
-        'data': movie.serialize(),
-    })
+    try:
+        movie = Movie(title=body.get('title'), release_date=body.get('release_date'))
+        movie.insert()
+
+        return jsonify({
+            'error': False,
+            'data': movie.serialize(),
+        })
+
+    except BaseException:
+        abort(422)
+
 
 @app.route('/movies/<int:movie_id>', methods=['PATCH'])
 def update_movie(movie_id):
     movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
+    if movie is None:
+        abort(404)
 
     body = request.get_json()
-    if 'title' in body:
-        movie.title = body.get('title')
+    if not body:
+        abort(400)
 
-    if 'release_date' in body:
-        movie.release_date = body.get('release_date')
+    try:    
+        if 'title' in body:
+            movie.title = body.get('title')
 
-    movie.update()
+        if 'release_date' in body:
+            movie.release_date = body.get('release_date')
 
-    return jsonify({
-        'error': False,
-        'data': movie.serialize(),
-    })
+        movie.update()
+
+        return jsonify({
+            'error': False,
+            'data': movie.serialize(),
+        })
+
+    except BaseException:
+        abort(400)
+
 
 @app.route('/movies/<int:movie_id>', methods=['DELETE'])
 def delete_movie(movie_id):
     movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
-    movie.delete()
+    if movie is None:
+        abort(404)
 
+    try:
+        movie.delete()
+        return jsonify({
+            'error': False,
+            'deleted': movie_id
+        })
+
+    except BaseException:
+        abort(422)
+
+
+#----------------------------------------------------------------------------#
+# Error handlers.
+#----------------------------------------------------------------------------#
+
+@app.errorhandler(400)
+def bad_request(error):
     return jsonify({
-        'error': False,
-        'deleted': movie_id
-    })
+        "success": False,
+        "error": 400,
+        "message": "bad request"
+    }), 400
 
+
+@app.errorhandler(401)
+def unauthorized(error):
+    return jsonify({
+        "success": False,
+        "error": 401,
+        "message": 'unathorized'
+    }), 401
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({
+        "success": False,
+        "error": 404,
+        "message": "resource not found"
+    }), 404
+
+
+@app.errorhandler(405)
+def not_allowed(error):
+    return jsonify({
+        "success": False,
+        "error": 405,
+        "message": "method not allowed"
+    }), 405
+
+
+@app.errorhandler(422)
+def unprocessable(error):
+    return jsonify({
+        "success": False,
+        "error": 422,
+        "message": "unprocessable"
+    }), 422
+
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    return jsonify({
+        "success": False,
+        "error": 500,
+        "message": "internal server error"
+    }), 500
 
 #----------------------------------------------------------------------------#
 # Launch.
