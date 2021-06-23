@@ -94,7 +94,17 @@ class Movie(db.Model):
     title = db.Column(db.String(120), nullable=False)
     release_date = db.Column(db.DateTime(), nullable=False)
 
-    @property
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
     def serialize(self):
          return {
             'id': self.id,
@@ -102,6 +112,3 @@ class Movie(db.Model):
             'release_date': self.release_date,
         }
 
-    def insert(self):
-        db.session.add(self)
-        db.session.commit()

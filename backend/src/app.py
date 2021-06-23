@@ -42,7 +42,6 @@ def index():
 @app.route('/actors')
 def get_actors():
     selection = Actor.query.all()
-    print(selection)
     actors = [actor.serialize() for actor in selection]
 
     return jsonify({
@@ -97,7 +96,8 @@ def delete_actor(actor_id):
     actor.delete()
 
     return jsonify({
-        'error': False
+        'error': False,
+        deleted: actor_id
     })
 
 #  Movies
@@ -105,23 +105,61 @@ def delete_actor(actor_id):
 
 @app.route('/movies')
 def get_movies():
-    return 'get movies'
+    selection = Movie.query.all()
+    movies = [movie.serialize() for movie in selection]
+
+    return jsonify({
+        'error': False,
+        'data': movies
+    })
 
 @app.route('/movies/<int:movie_id>')
 def show_movie(movie_id):
-    return 'show movie'
+    movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
+
+    return jsonify({
+        'error': False,
+        'data': movie.serialize(),
+    })
 
 @app.route('/movies', methods=['POST'])
 def create_movie():
-    return 'post movie'
+    body = request.get_json()
+    movie = Movie(title=body.get('title'), release_date=body.get('release_date'))
+    movie.insert()
+
+    return jsonify({
+        'error': False,
+        'data': movie.serialize(),
+    })
 
 @app.route('/movies/<int:movie_id>', methods=['PATCH'])
 def update_movie(movie_id):
-    return 'update movie'
+    movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
+
+    body = request.get_json()
+    if 'title' in body:
+        movie.title = body.get('title')
+
+    if 'release_date' in body:
+        movie.release_date = body.get('release_date')
+
+    movie.update()
+
+    return jsonify({
+        'error': False,
+        'data': movie.serialize(),
+    })
 
 @app.route('/movies/<int:movie_id>', methods=['DELETE'])
 def delete_movie(movie_id):
-    return 'delete movie'
+    movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
+    movie.delete()
+
+    return jsonify({
+        'error': False,
+        'deleted': movie_id
+    })
 
 
 #----------------------------------------------------------------------------#
