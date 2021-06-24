@@ -57,8 +57,8 @@ def create_app(test_config=None):
     #  ----------------------------------------------------------------
 
     @app.route('/actors')
-    # @requires_auth('get:actors')
-    def get_actors():
+    @requires_auth('get:actors')
+    def get_actors(payload):
         try:
             selection = Actor.query.all()
             actors = [actor.serialize() for actor in selection]
@@ -72,7 +72,7 @@ def create_app(test_config=None):
 
     @app.route('/actors/<int:actor_id>')
     @requires_auth('get:actors')
-    def show_actor(actor_id):
+    def show_actor(payload, actor_id):
         try:
             actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
             return jsonify({
@@ -84,7 +84,7 @@ def create_app(test_config=None):
 
     @app.route('/actors', methods=['POST'])
     @requires_auth('post:actors')
-    def create_actor():
+    def create_actor(payload):
         body = request.get_json()
         if 'name' not in body:
             abort(400)
@@ -105,7 +105,7 @@ def create_app(test_config=None):
 
     @app.route('/actors/<int:actor_id>', methods=['PATCH'])
     @requires_auth('patch:actors')
-    def update_actor(actor_id):
+    def update_actor(payload, actor_id):
         actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
         if actor is None:
             abort(404)
@@ -136,7 +136,7 @@ def create_app(test_config=None):
 
     @app.route('/actors/<int:actor_id>', methods=['DELETE'])
     @requires_auth('delete:actors')
-    def delete_actor(actor_id):
+    def delete_actor(payload, actor_id):
         actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
         if actor is None:
             abort(404)
@@ -155,8 +155,8 @@ def create_app(test_config=None):
     #  ----------------------------------------------------------------
 
     @app.route('/movies')
-    # @requires_auth('get:movies')
-    def get_movies():
+    @requires_auth('get:movies')
+    def get_movies(payload):
         try:
             selection = Movie.query.all()
             movies = [movie.serialize() for movie in selection]
@@ -170,7 +170,7 @@ def create_app(test_config=None):
 
     @app.route('/movies/<int:movie_id>')
     @requires_auth('get:movies')
-    def show_movie(movie_id):
+    def show_movie(payload, movie_id):
         try:
             movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
             return jsonify({
@@ -183,7 +183,7 @@ def create_app(test_config=None):
 
     @app.route('/movies', methods=['POST'])
     @requires_auth('post:movies')
-    def create_movie():
+    def create_movie(payload):
         body = request.get_json()
         if 'title' not in body:
             abort(400)
@@ -204,7 +204,7 @@ def create_app(test_config=None):
 
     @app.route('/movies/<int:movie_id>', methods=['PATCH'])
     @requires_auth('patch:movies')
-    def update_movie(movie_id):
+    def update_movie(payload, movie_id):
         movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
         if movie is None:
             abort(404)
@@ -232,7 +232,7 @@ def create_app(test_config=None):
 
     @app.route('/movies/<int:movie_id>', methods=['DELETE'])
     @requires_auth('delete:movies')
-    def delete_movie(movie_id):
+    def delete_movie(payload, movie_id):
         movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
         if movie is None:
             abort(404)
