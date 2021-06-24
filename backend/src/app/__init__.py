@@ -7,6 +7,7 @@ from flask import Flask, request, abort, jsonify
 from flask_cors import CORS
 
 from models import setup_db, Actor, Movie
+from auth import AuthError, requires_auth
 
 
 def create_app(test_config=None):
@@ -18,6 +19,7 @@ def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
     cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+    # CORS(app)
 
     @app.after_request
     def after_request(response):
@@ -43,10 +45,19 @@ def create_app(test_config=None):
             'author': 'Felipe Silveira'
         })
 
+    @app.route('/login')
+    def login():
+        token = request.args.get("login#access_token")
+        return jsonify({
+            'token': token,
+            'error': False
+        })
+
     #  Actors
     #  ----------------------------------------------------------------
 
     @app.route('/actors')
+    @requires_auth('get:actors')
     def get_actors():
         try:
             selection = Actor.query.all()
@@ -60,6 +71,7 @@ def create_app(test_config=None):
             abort(500)
 
     @app.route('/actors/<int:actor_id>')
+    @requires_auth('get:actors')
     def show_actor(actor_id):
         try:
             actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
@@ -71,6 +83,7 @@ def create_app(test_config=None):
             abort(404)
 
     @app.route('/actors', methods=['POST'])
+    @requires_auth('post:actors')
     def create_actor():
         body = request.get_json()
         if 'name' not in body:
@@ -91,6 +104,7 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/actors/<int:actor_id>', methods=['PATCH'])
+    @requires_auth('patch:actors')
     def update_actor(actor_id):
         actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
         if actor is None:
@@ -121,6 +135,7 @@ def create_app(test_config=None):
             abort(400)
 
     @app.route('/actors/<int:actor_id>', methods=['DELETE'])
+    @requires_auth('delete:actors')
     def delete_actor(actor_id):
         actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
         if actor is None:
@@ -140,6 +155,7 @@ def create_app(test_config=None):
     #  ----------------------------------------------------------------
 
     @app.route('/movies')
+    @requires_auth('get:movies')
     def get_movies():
         try:
             selection = Movie.query.all()
@@ -153,6 +169,7 @@ def create_app(test_config=None):
             abort(500)
 
     @app.route('/movies/<int:movie_id>')
+    @requires_auth('get:movies')
     def show_movie(movie_id):
         try:
             movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
@@ -165,6 +182,7 @@ def create_app(test_config=None):
             abort(404)
 
     @app.route('/movies', methods=['POST'])
+    @requires_auth('post:movies')
     def create_movie():
         body = request.get_json()
         if 'title' not in body:
@@ -185,6 +203,7 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/movies/<int:movie_id>', methods=['PATCH'])
+    @requires_auth('patch:movies')
     def update_movie(movie_id):
         movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
         if movie is None:
@@ -212,6 +231,7 @@ def create_app(test_config=None):
             abort(400)
 
     @app.route('/movies/<int:movie_id>', methods=['DELETE'])
+    @requires_auth('delete:movies')
     def delete_movie(movie_id):
         movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
         if movie is None:
@@ -278,5 +298,13 @@ def create_app(test_config=None):
             "error": 500,
             "message": "internal server error"
         }), 500
+
+    @app.errorhandler(AuthError)
+    def auth_error(error):
+        return jsonify({
+            "success": False,
+            "error": error.status_code,
+            "message": error.error['description']
+        }), error.status_code
 
     return app
