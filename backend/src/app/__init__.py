@@ -9,6 +9,17 @@ from flask_cors import CORS
 from models import setup_db, Actor, Movie
 from auth import AuthError, requires_auth
 
+ITEMS_PER_PAGE = 10
+
+def paginate_items(request, selection):
+    page = request.args.get('page', 1, type=int)
+    start = (page - 1) * ITEMS_PER_PAGE
+    end = start + ITEMS_PER_PAGE
+
+    items = [item.serialize() for item in selection]
+    current_items = items[start:end]
+
+    return current_items
 
 def create_app(test_config=None):
 
@@ -60,12 +71,13 @@ def create_app(test_config=None):
     @requires_auth('get:actors')
     def get_actors(payload):
         try:
-            selection = Actor.query.all()
-            actors = [actor.serialize() for actor in selection]
+            selection = Actor.query.order_by(Actor.id).all()
+            current_actors = paginate_items(request, selection)
 
             return jsonify({
                 'error': False,
-                'data': actors
+                'data': current_actors,
+                'total_items': len(selection),
             })
         except BaseException:
             abort(500)
@@ -158,12 +170,13 @@ def create_app(test_config=None):
     @requires_auth('get:movies')
     def get_movies(payload):
         try:
-            selection = Movie.query.all()
-            movies = [movie.serialize() for movie in selection]
+            selection = Movie.query.order_by(Movie.id).all()
+            current_movies = paginate_items(request, selection)
 
             return jsonify({
                 'error': False,
-                'data': movies
+                'data': current_movies,
+                'total_items': len(selection),
             })
         except BaseException:
             abort(500)
