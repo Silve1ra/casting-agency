@@ -2,6 +2,8 @@
 # Imports
 #----------------------------------------------------------------------------#
 
+import os
+import sys
 from sqlalchemy import Column, String, Integer
 from flask_sqlalchemy import SQLAlchemy
 
@@ -9,9 +11,12 @@ from flask_sqlalchemy import SQLAlchemy
 # Db Config.
 #----------------------------------------------------------------------------#
 
-database_name = "postgres"
-database_path = "postgresql://{}:{}@{}/{}".format(
-    'postgres', 'postgres', 'localhost:5432', database_name)
+try:  
+   database_path = os.environ['DATABASE_URL']
+except KeyError: 
+   print("Please set the environment variable")
+   sys.exit(1)
+
 
 db = SQLAlchemy()
 

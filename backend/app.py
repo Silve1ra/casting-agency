@@ -6,8 +6,8 @@ import os
 from flask import Flask, request, abort, jsonify
 from flask_cors import CORS
 
-from src.models import setup_db, Actor, Movie
-from src.auth import AuthError, requires_auth
+from models import setup_db, Actor, Movie
+from auth import AuthError, requires_auth
 
 ITEMS_PER_PAGE = 10
 

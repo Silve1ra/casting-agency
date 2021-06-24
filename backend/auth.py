@@ -1,3 +1,4 @@
+import os
 import json
 from six.moves.urllib.request import urlopen
 from functools import wraps
@@ -6,9 +7,9 @@ from flask import Flask, request, jsonify, abort
 from flask_cors import cross_origin
 from jose import jwt
 
-AUTH0_DOMAIN = 'silve1ra.us.auth0.com'
-API_AUDIENCE = 'casting-agency'
-ALGORITHMS = ["RS256"]
+AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
+API_AUDIENCE = os.environ['API_AUDIENCE']
+ALGORITHMS = os.environ['ALGORITHMS']
 
 # AuthError Exception
 '''
