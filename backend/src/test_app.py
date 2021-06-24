@@ -18,7 +18,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     #----------------------------------------------------------------------------#
     # Db Config.
     #----------------------------------------------------------------------------#
-    
+
     def setUp(self):
         """Define test variables and initialize app."""
         self.app = create_app()
@@ -26,7 +26,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.database_name = "postgres"
         self.database_path = "postgresql://{}:{}@{}/{}".format(
             'postgres', 'postgres', 'localhost:5432', self.database_name)
-        
+
         setup_db(self.app, self.database_path)
         db_drop_and_create_all()
 
@@ -101,7 +101,7 @@ class CastingAgencyTestCase(unittest.TestCase):
             "name": "test update",
             "age": 20,
             "gender": "female"
-        }        
+        }
 
         url = '/actors/' + str(actor_id)
         res = self.client().patch(url, json=updated_actor)
@@ -116,7 +116,7 @@ class CastingAgencyTestCase(unittest.TestCase):
             "name": "test update",
             "age": 20,
             "gender": "female"
-        }        
+        }
 
         url = '/actors/' + str(actor_id)
         res = self.client().patch(url, json=updated_actor)
@@ -143,7 +143,6 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)
-
 
     #  Movie
     #  ----------------------------------------------------------------
@@ -199,7 +198,7 @@ class CastingAgencyTestCase(unittest.TestCase):
             "name": "test update",
             "age": 20,
             "gender": "female"
-        }        
+        }
 
         url = '/movies/' + str(movie_id)
         res = self.client().patch(url, json=updated_movie)
@@ -214,7 +213,7 @@ class CastingAgencyTestCase(unittest.TestCase):
             "name": "test update",
             "age": 20,
             "gender": "female"
-        }        
+        }
 
         url = '/movies/' + str(movie_id)
         res = self.client().patch(url, json=updated_movie)

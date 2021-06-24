@@ -1,6 +1,6 @@
-#----------------------------------------------------------------------------#
+#-----------------------------------------------------------------#
 # Imports
-#----------------------------------------------------------------------------#
+#-----------------------------------------------------------------#
 
 import os
 from flask import Flask, request, abort, jsonify
@@ -8,11 +8,12 @@ from flask_cors import CORS
 
 from models import setup_db, Actor, Movie
 
+
 def create_app(test_config=None):
 
-    #----------------------------------------------------------------------------#
+    #-----------------------------------------------------------------#
     # App Config.
-    #----------------------------------------------------------------------------#
+    #-----------------------------------------------------------------#
 
     app = Flask(__name__)
     setup_db(app)
@@ -30,9 +31,9 @@ def create_app(test_config=None):
 
         return response
 
-    #----------------------------------------------------------------------------#
+    #-----------------------------------------------------------------#
     # Controllers.
-    #----------------------------------------------------------------------------#
+    #-----------------------------------------------------------------#
 
     @app.route('/')
     def index():
@@ -58,7 +59,6 @@ def create_app(test_config=None):
         except BaseException:
             abort(500)
 
-
     @app.route('/actors/<int:actor_id>')
     def show_actor(actor_id):
         try:
@@ -70,7 +70,6 @@ def create_app(test_config=None):
         except BaseException:
             abort(404)
 
-
     @app.route('/actors', methods=['POST'])
     def create_actor():
         body = request.get_json()
@@ -78,7 +77,10 @@ def create_app(test_config=None):
             abort(400)
 
         try:
-            actor = Actor(name=body.get('name'), age=body.get('age'), gender=body.get('gender'))
+            actor = Actor(
+                name=body.get('name'),
+                age=body.get('age'),
+                gender=body.get('gender'))
             actor.insert()
 
             return jsonify({
@@ -87,7 +89,6 @@ def create_app(test_config=None):
             })
         except BaseException:
             abort(422)
-
 
     @app.route('/actors/<int:actor_id>', methods=['PATCH'])
     def update_actor(actor_id):
@@ -119,7 +120,6 @@ def create_app(test_config=None):
         except BaseException:
             abort(400)
 
-        
     @app.route('/actors/<int:actor_id>', methods=['DELETE'])
     def delete_actor(actor_id):
         actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
@@ -135,7 +135,6 @@ def create_app(test_config=None):
 
         except BaseException:
             abort(422)
-
 
     #  Movies
     #  ----------------------------------------------------------------
@@ -153,7 +152,6 @@ def create_app(test_config=None):
         except BaseException:
             abort(500)
 
-
     @app.route('/movies/<int:movie_id>')
     def show_movie(movie_id):
         try:
@@ -166,7 +164,6 @@ def create_app(test_config=None):
         except BaseException:
             abort(404)
 
-
     @app.route('/movies', methods=['POST'])
     def create_movie():
         body = request.get_json()
@@ -174,7 +171,9 @@ def create_app(test_config=None):
             abort(400)
 
         try:
-            movie = Movie(title=body.get('title'), release_date=body.get('release_date'))
+            movie = Movie(
+                title=body.get('title'),
+                release_date=body.get('release_date'))
             movie.insert()
 
             return jsonify({
@@ -184,7 +183,6 @@ def create_app(test_config=None):
 
         except BaseException:
             abort(422)
-
 
     @app.route('/movies/<int:movie_id>', methods=['PATCH'])
     def update_movie(movie_id):
@@ -196,7 +194,7 @@ def create_app(test_config=None):
         if not body:
             abort(400)
 
-        try:    
+        try:
             if 'title' in body:
                 movie.title = body.get('title')
 
@@ -212,7 +210,6 @@ def create_app(test_config=None):
 
         except BaseException:
             abort(400)
-
 
     @app.route('/movies/<int:movie_id>', methods=['DELETE'])
     def delete_movie(movie_id):
@@ -230,10 +227,9 @@ def create_app(test_config=None):
         except BaseException:
             abort(422)
 
-
-    #----------------------------------------------------------------------------#
+    #-----------------------------------------------------------------#
     # Error handlers.
-    #----------------------------------------------------------------------------#
+    #-----------------------------------------------------------------#
 
     @app.errorhandler(400)
     def bad_request(error):
@@ -243,7 +239,6 @@ def create_app(test_config=None):
             "message": "bad request"
         }), 400
 
-
     @app.errorhandler(401)
     def unauthorized(error):
         return jsonify({
@@ -251,7 +246,6 @@ def create_app(test_config=None):
             "error": 401,
             "message": 'unathorized'
         }), 401
-
 
     @app.errorhandler(404)
     def not_found(error):
@@ -261,7 +255,6 @@ def create_app(test_config=None):
             "message": "resource not found"
         }), 404
 
-
     @app.errorhandler(405)
     def not_allowed(error):
         return jsonify({
@@ -269,7 +262,6 @@ def create_app(test_config=None):
             "error": 405,
             "message": "method not allowed"
         }), 405
-
 
     @app.errorhandler(422)
     def unprocessable(error):
@@ -279,7 +271,6 @@ def create_app(test_config=None):
             "message": "unprocessable"
         }), 422
 
-
     @app.errorhandler(500)
     def internal_server_error(error):
         return jsonify({
@@ -287,6 +278,5 @@ def create_app(test_config=None):
             "error": 500,
             "message": "internal server error"
         }), 500
-
 
     return app
