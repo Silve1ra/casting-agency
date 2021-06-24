@@ -18,8 +18,8 @@ def create_app(test_config=None):
 
     app = Flask(__name__)
     setup_db(app)
-    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
-    # CORS(app)
+    # cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+    CORS(app)
 
     @app.after_request
     def after_request(response):
@@ -57,7 +57,7 @@ def create_app(test_config=None):
     #  ----------------------------------------------------------------
 
     @app.route('/actors')
-    @requires_auth('get:actors')
+    # @requires_auth('get:actors')
     def get_actors():
         try:
             selection = Actor.query.all()
@@ -155,7 +155,7 @@ def create_app(test_config=None):
     #  ----------------------------------------------------------------
 
     @app.route('/movies')
-    @requires_auth('get:movies')
+    # @requires_auth('get:movies')
     def get_movies():
         try:
             selection = Movie.query.all()

@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-card-title>Delete Actor</mat-card-title>
+    <form>
+        <mat-form-field>
+            <input matInput placeholder="Name"
+                [value]="actor.name" name="name" disabled>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Gender"
+                [value]="actor.gender" name="gender" disabled>
+        </mat-form-field>
+    </form>
+    <button mat-raised-button (click)="deleteActor()" color="warn">
+        Delete
+    </button>
+    
+    <button mat-raised-button (click)="cancel()">
+        Cancel
+    </button>
+</mat-card>
