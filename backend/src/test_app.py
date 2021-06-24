@@ -148,6 +148,100 @@ class CastingAgencyTestCase(unittest.TestCase):
     #  Movie
     #  ----------------------------------------------------------------
 
+    def test_get_movies(self):
+        res = self.client().get('/movies')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['error'], False)
+
+    def test_show_movie(self):
+        res = self.client().get('/movies/1')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['error'], False)
+
+    def test_404_show_movie(self):
+        res = self.client().get('/movies/999')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+
+    def test_create_movie(self):
+        new_movie = {
+            "title": "test",
+            "release_date": "2000-01-20"
+        }
+
+        res = self.client().post('/movies', json=new_movie)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['error'], False)
+
+    def test_404_create_movie(self):
+        new_movie = {
+            "age": 20,
+            "gender": "female"
+        }
+
+        res = self.client().post('/movies', json=new_movie)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(data['success'], False)
+
+    def test_update_movie(self):
+        movie_id = 1
+        updated_movie = {
+            "name": "test update",
+            "age": 20,
+            "gender": "female"
+        }        
+
+        url = '/movies/' + str(movie_id)
+        res = self.client().patch(url, json=updated_movie)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['error'], False)
+
+    def test_404_update_movie(self):
+        movie_id = 999
+        updated_movie = {
+            "name": "test update",
+            "age": 20,
+            "gender": "female"
+        }        
+
+        url = '/movies/' + str(movie_id)
+        res = self.client().patch(url, json=updated_movie)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+
+    def test_delete_movie(self):
+        movie_id = 1
+        url = '/movies/' + str(movie_id)
+        res = self.client().delete(url)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['error'], False)
+        self.assertEqual(data['deleted'], movie_id)
+
+    def test_404_delete_movie(self):
+        movie_id = 999
+        url = '/movies/' + str(movie_id)
+        res = self.client().delete(url)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
