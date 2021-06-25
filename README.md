@@ -23,6 +23,15 @@ All backend code follows [PEP8 style guidelines](https://www.python.org/dev/peps
 ### Pre-requisites and Local Development 
 Developers using this project should already have Python3, pip and node installed on their local machines.
 
+#### Documentation
+To access the documentation do the following commands:
+```
+cd docs
+npx serve -p 4000
+```
+
+The documentation is run on `http://127.0.0.1:4000/`
+
 #### Backend
 
 To run the application run the following commands: 
@@ -38,7 +47,7 @@ $env:FLASK_ENV='development'
 flask run
 ```
 
-The application is run on `http://127.0.0.1:5000/` by default and is a proxy in the frontend configuration. 
+The application is run on `http://127.0.0.1:5000/` by default.
 
 #### Frontend
 
