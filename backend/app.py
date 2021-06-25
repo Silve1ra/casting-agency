@@ -3,35 +3,12 @@
 #-----------------------------------------------------------------#
 
 import os
-from flask import Flask, request, abort, jsonify, session, url_for, redirect
+from flask import Flask, request, abort, jsonify, session, url_for, redirect, render_template
 from flask_cors import CORS
 from authlib.integrations.flask_client import OAuth
 
 from models import setup_db, Actor, Movie
 from auth import AuthError, requires_auth
-
-AUTH0_CLIENT_ID = os.environ['AUTH0_CLIENT_ID']
-AUTH0_CLIENT_SECRET = os.environ['AUTH0_CLIENT_SECRET']
-AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
-AUTH0_CALLBACK_URL = os.environ['AUTH0_CALLBACK_URL']
-AUTH0_AUDIENCE = os.environ['API_AUDIENCE']
-
-ITEMS_PER_PAGE = 10
-
-
-def paginate_items(request, selection):
-    page = request.args.get('page', 1, type=int)
-    start = (page - 1) * ITEMS_PER_PAGE
-    end = start + ITEMS_PER_PAGE
-
-    items = [item.serialize() for item in selection]
-    current_items = items[start:end]
-
-    return current_items
-
-#-----------------------------------------------------------------#
-# App Config.
-#-----------------------------------------------------------------#
 
 
 def create_app(test_config=None):
@@ -44,7 +21,6 @@ def create_app(test_config=None):
 
 
 app = create_app()
-
 
 @app.after_request
 def after_request(response):
@@ -62,6 +38,11 @@ def after_request(response):
 # Auth0.
 #-----------------------------------------------------------------#
 
+AUTH0_CLIENT_ID = os.environ['AUTH0_CLIENT_ID']
+AUTH0_CLIENT_SECRET = os.environ['AUTH0_CLIENT_SECRET']
+AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
+AUTH0_CALLBACK_URL = os.environ['AUTH0_CALLBACK_URL']
+AUTH0_AUDIENCE = os.environ['API_AUDIENCE']
 
 oauth = OAuth(app)
 auth0 = oauth.register(
@@ -83,6 +64,10 @@ def index():
         'version': '1.0',
         'author': 'Felipe Silveira'
     })
+
+@app.route('/docs')
+def get_documentation():
+    return render_template('index.html')
 
 
 @app.route('/login')
@@ -108,6 +93,24 @@ def logout():
 
     return redirect('/')
 
+
+#-----------------------------------------------------------------#
+# Helpers.
+#-----------------------------------------------------------------#
+
+ITEMS_PER_PAGE = 10
+
+def paginate_items(request, selection):
+    page = request.args.get('page', 1, type=int)
+    start = (page - 1) * ITEMS_PER_PAGE
+    end = start + ITEMS_PER_PAGE
+
+    items = [item.serialize() for item in selection]
+    current_items = items[start:end]
+
+    return current_items
+
+
 #-----------------------------------------------------------------#
 # Controllers.
 #-----------------------------------------------------------------#
@@ -115,13 +118,15 @@ def logout():
 #  Actors
 #  ----------------------------------------------------------------
 
-
 @app.route('/actors')
 @requires_auth('get:actors')
 def get_actors(payload):
     try:
+        print('get_actors')
         selection = Actor.query.order_by(Actor.id).all()
+        print(selection)
         current_actors = paginate_items(request, selection)
+        print(current_actors)
 
         return jsonify({
             'error': False,
@@ -129,6 +134,7 @@ def get_actors(payload):
             'total_items': len(selection),
         })
     except BaseException:
+        print('deu erro')
         abort(500)
 
 
