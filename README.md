@@ -32,6 +32,8 @@ npx serve -p 4000
 
 The documentation is run on `http://127.0.0.1:4000/`
 
+---
+
 #### Backend
 
 To run the application run the following commands: 
@@ -59,6 +61,8 @@ npm start
 
 By default, the frontend will run on localhost:3000. 
 
+---
+
 ### ✔ Tests
 In order to run tests navigate to the backend folder and run the following commands: 
 
@@ -66,20 +70,33 @@ In order to run tests navigate to the backend folder and run the following comma
 python test_app.py
 ```
 
+---
+
 ### 💻 Endpoints summary
+There are complete information about endpoints on the docs, please refer there.
 
 local URL: `curl https://casting-agency-api-silve1ra.herokuapp.com/`
 deployed URL: `curl http://127.0.0.1:5000/`
 
-#### GET /actors
-#### GET /actors/:id
-#### POST /actors
-#### DELETE /actors/:id
+Actors
+| Method        | endpoint      |
+| ------------- |:-------------:| 
+| GET    | /actors       |
+| GET    | /actors/:id   |
+| POST   | /actors       |
+| UPDATE | /actors       |
+| DELETE | /actors/:id   |
 
-#### GET /movies
-#### GET /movies/:id
-#### POST /movies
-#### DELETE /movies/:id
+Movies
+| Method        | endpoint      |
+| ------------- |:-------------:| 
+| GET    | /movies       |
+| GET    | /movies/:id   |
+| POST   | /movies       |
+| UPDATE | /movies       |
+| DELETE | /movies/:id   |
+
+---
 
 ### ⛔ Error Handling
 Errors are returned as JSON objects in the following format:
@@ -94,6 +111,8 @@ The API will return three error types when requests fail:
 - 400: Bad Request
 - 404: Resource Not Found
 - 422: Not Processable 
+
+---
 
 ## 🤔 How to Contribute
 
