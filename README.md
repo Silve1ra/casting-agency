@@ -63,14 +63,14 @@ By default, the frontend will run on localhost:3000.
 In order to run tests navigate to the backend folder and run the following commands: 
 
 ```
-python test_flaskr.py
+python test_app.py
 ```
 
 All tests are kept in that file and should be maintained as updates are made to app functionality. 
 
 ## 🤔 How to Contribute
 
-- Clone the project: `git clone git@github.com:Silve1ra/moveit.git`;
+- Clone the project: `git clone git@github.com:Silve1ra/casting-agency.git`;
 - Create your branch with your feature: `git checkout -b my-feature`;
 - Commit your feature: `git commit -m 'feat: My new feature'`;
 - Push to your branch: `git push -u origin my-feature`.
