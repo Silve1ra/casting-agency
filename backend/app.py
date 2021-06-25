@@ -3,13 +3,21 @@
 #-----------------------------------------------------------------#
 
 import os
-from flask import Flask, request, abort, jsonify
+from flask import Flask, request, abort, jsonify, session, url_for, redirect
 from flask_cors import CORS
+from authlib.integrations.flask_client import OAuth
 
 from models import setup_db, Actor, Movie
 from auth import AuthError, requires_auth
 
+AUTH0_CLIENT_ID = os.environ['AUTH0_CLIENT_ID']
+AUTH0_CLIENT_SECRET = os.environ['AUTH0_CLIENT_SECRET']
+AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
+AUTH0_CALLBACK_URL = os.environ['AUTH0_CALLBACK_URL']
+AUTH0_AUDIENCE = os.environ['API_AUDIENCE']
+
 ITEMS_PER_PAGE = 10
+
 
 def paginate_items(request, selection):
     page = request.args.get('page', 1, type=int)
@@ -25,15 +33,17 @@ def paginate_items(request, selection):
 # App Config.
 #-----------------------------------------------------------------#
 
+
 def create_app(test_config=None):
     app = Flask(__name__)
     # cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
     CORS(app)
+    setup_db(app)
+    app.secret_key = "super secret key"
     return app
 
 
 app = create_app()
-setup_db(app)
 
 
 @app.after_request
@@ -49,8 +59,22 @@ def after_request(response):
     return response
 
 #-----------------------------------------------------------------#
-# Controllers.
+# Auth0.
 #-----------------------------------------------------------------#
+
+
+oauth = OAuth(app)
+auth0 = oauth.register(
+    'auth0',
+    client_id=AUTH0_CLIENT_ID,
+    client_secret=AUTH0_CLIENT_SECRET,
+    access_token_url=AUTH0_DOMAIN + '/oauth/token',
+    authorize_url=AUTH0_DOMAIN + '/authorize',
+    client_kwargs={
+        'scope': 'openid profile email',
+    },
+)
+
 
 @app.route('/')
 def index():
@@ -60,16 +84,37 @@ def index():
         'author': 'Felipe Silveira'
     })
 
+
 @app.route('/login')
 def login():
-    token = request.args.get("login#access_token")
-    return jsonify({
-        'token': token,
-        'error': False
-    })
+    return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL,
+                                    audience=AUTH0_AUDIENCE)
+
+
+@app.route('/callback')
+def callback_handling():
+    res = auth0.authorize_access_token()
+    token = res.get('access_token')
+    session['jwt_token'] = token
+
+    return redirect('/')
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    params = {'returnTo': url_for(
+        'index', _external=True), 'client_id': AUTH0_CLIENT_ID}
+
+    return redirect('/')
+
+#-----------------------------------------------------------------#
+# Controllers.
+#-----------------------------------------------------------------#
 
 #  Actors
 #  ----------------------------------------------------------------
+
 
 @app.route('/actors')
 @requires_auth('get:actors')
@@ -86,6 +131,7 @@ def get_actors(payload):
     except BaseException:
         abort(500)
 
+
 @app.route('/actors/<int:actor_id>')
 @requires_auth('get:actors')
 def show_actor(payload, actor_id):
@@ -97,6 +143,7 @@ def show_actor(payload, actor_id):
         })
     except BaseException:
         abort(404)
+
 
 @app.route('/actors', methods=['POST'])
 @requires_auth('post:actors')
@@ -118,6 +165,7 @@ def create_actor(payload):
         })
     except BaseException:
         abort(422)
+
 
 @app.route('/actors/<int:actor_id>', methods=['PATCH'])
 @requires_auth('patch:actors')
@@ -150,6 +198,7 @@ def update_actor(payload, actor_id):
     except BaseException:
         abort(400)
 
+
 @app.route('/actors/<int:actor_id>', methods=['DELETE'])
 @requires_auth('delete:actors')
 def delete_actor(payload, actor_id):
@@ -170,6 +219,7 @@ def delete_actor(payload, actor_id):
 #  Movies
 #  ----------------------------------------------------------------
 
+
 @app.route('/movies')
 @requires_auth('get:movies')
 def get_movies(payload):
@@ -185,6 +235,7 @@ def get_movies(payload):
     except BaseException:
         abort(500)
 
+
 @app.route('/movies/<int:movie_id>')
 @requires_auth('get:movies')
 def show_movie(payload, movie_id):
@@ -197,6 +248,7 @@ def show_movie(payload, movie_id):
 
     except BaseException:
         abort(404)
+
 
 @app.route('/movies', methods=['POST'])
 @requires_auth('post:movies')
@@ -218,6 +270,7 @@ def create_movie(payload):
 
     except BaseException:
         abort(422)
+
 
 @app.route('/movies/<int:movie_id>', methods=['PATCH'])
 @requires_auth('patch:movies')
@@ -247,6 +300,7 @@ def update_movie(payload, movie_id):
     except BaseException:
         abort(400)
 
+
 @app.route('/movies/<int:movie_id>', methods=['DELETE'])
 @requires_auth('delete:movies')
 def delete_movie(payload, movie_id):
@@ -268,6 +322,7 @@ def delete_movie(payload, movie_id):
 # Error handlers.
 #-----------------------------------------------------------------#
 
+
 @app.errorhandler(400)
 def bad_request(error):
     return jsonify({
@@ -275,6 +330,7 @@ def bad_request(error):
         "error": 400,
         "message": "bad request"
     }), 400
+
 
 @app.errorhandler(401)
 def unauthorized(error):
@@ -284,6 +340,7 @@ def unauthorized(error):
         "message": 'unathorized'
     }), 401
 
+
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({
@@ -291,6 +348,7 @@ def not_found(error):
         "error": 404,
         "message": "resource not found"
     }), 404
+
 
 @app.errorhandler(405)
 def not_allowed(error):
@@ -300,6 +358,7 @@ def not_allowed(error):
         "message": "method not allowed"
     }), 405
 
+
 @app.errorhandler(422)
 def unprocessable(error):
     return jsonify({
@@ -307,6 +366,7 @@ def unprocessable(error):
         "error": 422,
         "message": "unprocessable"
     }), 422
+
 
 @app.errorhandler(500)
 def internal_server_error(error):
@@ -316,6 +376,7 @@ def internal_server_error(error):
         "message": "internal server error"
     }), 500
 
+
 @app.errorhandler(AuthError)
 def auth_error(error):
     return jsonify({
@@ -323,7 +384,6 @@ def auth_error(error):
         "error": error.status_code,
         "message": error.error['description']
     }), error.status_code
-
 
 
 if __name__ == '__main__':

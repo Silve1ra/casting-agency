@@ -11,13 +11,7 @@ from flask_sqlalchemy import SQLAlchemy
 # Db Config.
 #----------------------------------------------------------------------------#
 
-try:  
-   database_path = os.environ['DATABASE_URL']
-except KeyError: 
-   print("Please set the environment variable")
-   sys.exit(1)
-
-
+database_path = os.environ['DATABASE_URL']
 db = SQLAlchemy()
 
 #  Setup db
