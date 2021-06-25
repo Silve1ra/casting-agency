@@ -66,7 +66,34 @@ In order to run tests navigate to the backend folder and run the following comma
 python test_app.py
 ```
 
-All tests are kept in that file and should be maintained as updates are made to app functionality. 
+### 💻 Endpoints summary
+
+local URL: `curl https://casting-agency-api-silve1ra.herokuapp.com/`
+deployed URL: `curl http://127.0.0.1:5000/`
+
+#### GET /actors
+#### GET /actors/:id
+#### POST /actors
+#### DELETE /actors/:id
+
+#### GET /movies
+#### GET /movies/:id
+#### POST /movies
+#### DELETE /movies/:id
+
+### ⛔ Error Handling
+Errors are returned as JSON objects in the following format:
+```
+{
+    "success": False, 
+    "error": 400,
+    "message": "bad request"
+}
+```
+The API will return three error types when requests fail:
+- 400: Bad Request
+- 404: Resource Not Found
+- 422: Not Processable 
 
 ## 🤔 How to Contribute
 
