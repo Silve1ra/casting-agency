@@ -11,6 +11,8 @@ import { HomeComponent } from './views/home/home.component'
 import { ActorCrudComponent } from './views/actor-crud/actor-crud.component'
 import { ActorCreateComponent } from './components/actor/actor-create/actor-create.component'
 
+import { AuthGuard } from '@auth0/auth0-angular'
+
 const routes: Routes = [
   {
     path: 'login',
@@ -23,14 +25,17 @@ const routes: Routes = [
   {
     path: 'actors/create',
     component: ActorCreateComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'actors/update/:id',
     component: ActorUpdateComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'actors/delete/:id',
     component: ActorDeleteComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'movies',
@@ -39,14 +44,17 @@ const routes: Routes = [
   {
     path: 'movies/create',
     component: MovieCreateComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'movies/update/:id',
     component: MovieUpdateComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'movies/delete/:id',
     component: MovieDeleteComponent,
+    canActivate: [AuthGuard],
   },
 ]
 

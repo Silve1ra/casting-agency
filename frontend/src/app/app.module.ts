@@ -88,7 +88,7 @@ registerLocaleData(localePt)
     MatSortModule,
     AuthModule.forRoot({
       domain: 'silve1ra.us.auth0.com',
-      clientId: 'Sc3lEwl0evkE7ng9ezEawKBrNQjy80uh',
+      clientId: 'm7xjTM4Y2SqGfLRk9Y7hTcr8BbxcifbU',
     }),
   ],
   providers: [
