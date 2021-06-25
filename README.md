@@ -18,7 +18,7 @@
 This project is a casting agency to operate movies and actors. 
 All backend code follows [PEP8 style guidelines](https://www.python.org/dev/peps/pep-0008/). 
 
-## Getting Started
+## 💭 Getting Started
 
 ### Pre-requisites and Local Development 
 Developers using this project should already have Python3, pip and node installed on their local machines.
@@ -50,7 +50,7 @@ npm start
 
 By default, the frontend will run on localhost:3000. 
 
-### Tests
+### ✔ Tests
 In order to run tests navigate to the backend folder and run the following commands: 
 
 ```
@@ -59,8 +59,25 @@ python test_flaskr.py
 
 All tests are kept in that file and should be maintained as updates are made to app functionality. 
 
-## Authors
-Yours truly, <a href="https://github.com/Silve1ra"><b>Felipe Silveira</b> 
+## 🤔 How to Contribute
 
-## Acknowledgements 
+- Clone the project: `git clone git@github.com:Silve1ra/moveit.git`;
+- Create your branch with your feature: `git checkout -b my-feature`;
+- Commit your feature: `git commit -m 'feat: My new feature'`;
+- Push to your branch: `git push -u origin my-feature`.
+
+After the merge of your pull request is done, you can delete your branch.
+
+## :memo: License
+
+This project is under the MIT license. See the [LICENSE](LICENSE.md) file for more details.
+
+
+## 🍸 Acknowledgements 
 The awesome Udacity Nanodegree helping me to be an extraordinary full stack developer! 
+
+---
+
+Made with ♥ by <tr>
+    <td align="center"><a href="https://github.com/silve1ra"><b>Felipe Silveira</b></a><br /></td>
+<tr>
