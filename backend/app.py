@@ -11,16 +11,20 @@ from models import setup_db, Actor, Movie
 from auth import AuthError, requires_auth
 
 
-def create_app(test_config=None):
-    app = Flask(__name__)
-    # cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
-    CORS(app)
-    setup_db(app)
-    app.secret_key = "super secret key"
-    return app
+# def create_app(test_config=None):
+#     app = Flask(__name__)
+#     # cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+#     CORS(app)
+#     setup_db(app)
+#     app.secret_key = "super secret key"
+#     return app
+# app = create_app()
 
-
-app = create_app()
+app = Flask(__name__)
+setup_db(app)
+CORS(app)
+app.secret_key = "super secret key"
+# return app
 
 @app.after_request
 def after_request(response):
