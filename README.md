@@ -1,138 +1,27 @@
-<h4 align="center">
-  🚀 Casting Agency
-</h4>
+# Frontend
 
-<p align="center">
-  
-  <a href="https://github.com/Silve1ra/casting-agency/commits/main">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Silve1ra/casting-agency">
-  </a>
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.2.
 
-  <a href="https://github.com/Silve1ra/casting-agency/issues">
-    <img alt="Repository issues" src="https://img.shields.io/github/issues/Silve1ra/casting-agency">
-  </a>
+## Development server
 
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen">
-</p>
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-This project is a casting agency to operate movies and actors. 
-All backend code follows [PEP8 style guidelines](https://www.python.org/dev/peps/pep-0008/). 
+## Code scaffolding
 
-## 💭 Getting Started
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-### Pre-requisites and Local Development 
-Developers using this project should already have Python3, pip and node installed on their local machines.
+## Build
 
-#### Documentation
-To access the documentation do the following commands:
-```
-cd docs
-npx serve -p 4000
-```
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-The documentation is run on `http://127.0.0.1:4000/`
+## Running unit tests
 
----
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-#### Backend
+## Running end-to-end tests
 
-To run the application run the following commands: 
-```
-export FLASK_APP=flaskr
-export FLASK_ENV=development
-flask run
-```
-or (Windows 10 PowerShell):
-```
-$env:FLASK_APP='flaskr'
-$env:FLASK_ENV='development'
-flask run
-```
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-The application is run on `http://127.0.0.1:5000/` by default.
+## Further help
 
-#### Frontend
-
-From the frontend folder, run the following commands to start the client: 
-```
-npm install // only once to install dependencies
-npm start 
-```
-
-By default, the frontend will run on localhost:3000. 
-
----
-
-### ✔ Tests
-In order to run tests navigate to the backend folder and run the following commands: 
-
-```
-python test_app.py
-```
-
----
-
-### 💻 Endpoints summary
-There are complete information about endpoints on the docs, please refer there.
-
-local URL: `curl https://casting-agency-api-silve1ra.herokuapp.com/`
-deployed URL: `curl http://127.0.0.1:5000/`
-
-Actors
-| Method        | endpoint      |
-| ------------- |:-------------:| 
-| GET    | /actors       |
-| GET    | /actors/:id   |
-| POST   | /actors       |
-| UPDATE | /actors       |
-| DELETE | /actors/:id   |
-
-Movies
-| Method        | endpoint      |
-| ------------- |:-------------:| 
-| GET    | /movies       |
-| GET    | /movies/:id   |
-| POST   | /movies       |
-| UPDATE | /movies       |
-| DELETE | /movies/:id   |
-
----
-
-### ⛔ Error Handling
-Errors are returned as JSON objects in the following format:
-```
-{
-    "success": False, 
-    "error": 400,
-    "message": "bad request"
-}
-```
-The API will return three error types when requests fail:
-- 400: Bad Request
-- 404: Resource Not Found
-- 422: Not Processable 
-
----
-
-## 🤔 How to Contribute
-
-- Clone the project: `git clone git@github.com:Silve1ra/casting-agency.git`;
-- Create your branch with your feature: `git checkout -b my-feature`;
-- Commit your feature: `git commit -m 'feat: My new feature'`;
-- Push to your branch: `git push -u origin my-feature`.
-
-After the merge of your pull request is done, you can delete your branch.
-
-## :memo: License
-
-This project is under the MIT license. See the [LICENSE](LICENSE.md) file for more details.
-
-
-## 🍸 Acknowledgements 
-The awesome Udacity Nanodegree helping me to be an extraordinary full stack developer! 
-
----
-
-Made with ♥ by <tr>
-    <td align="center"><a href="https://github.com/silve1ra"><b>Felipe Silveira</b></a><br /></td>
-<tr>
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
