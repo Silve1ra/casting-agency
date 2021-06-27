@@ -1,27 +1,56 @@
-# App
+<h4 align="center">
+  🚀 Casting Agency APP
+</h4>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.2.
+<p align="center">
+  
+  <a href="https://github.com/Silve1ra/casting-agency-app/commits/main">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Silve1ra/casting-agency-app">
+  </a>
 
-## Development server
+  <a href="https://github.com/Silve1ra/casting-agency-app/issues">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/Silve1ra/casting-agency-app">
+  </a>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen">
+</p>
 
-## Code scaffolding
+This project is a casting agency to operate movies and actors. 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+## 💻 Demo
+![Demo](demo.gif)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 🏡 Local Development 
+To run the application run the following commands: 
+```
+npm install
+npm start
+```
 
-## Running unit tests
+The application is run on `http://127.0.0.1:4200/` by default.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+## 🤔 How to Contribute
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Clone the project: `git clone git@github.com:Silve1ra/casting-agency-api.git`;
+- Create your branch with your feature: `git checkout -b my-feature`;
+- Commit your feature: `git commit -m 'feat: My new feature'`;
+- Push to your branch: `git push -u origin my-feature`.
 
-## Further help
+After the merge of your pull request is done, you can delete your branch.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## :memo: License
+
+This project is under the MIT license. See the [LICENSE](LICENSE.md) file for more details.
+
+
+## 🍸 Acknowledgements 
+The awesome Udacity Nanodegree helping me to be an extraordinary full stack developer! 
+
+---
+
+Made with ♥ by <tr>
+    <td align="center"><a href="https://github.com/silve1ra"><b>Felipe Silveira</b></a><br /></td>
+<tr>
