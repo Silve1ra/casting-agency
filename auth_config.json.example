@@ -1,6 +1,0 @@
-{
-  "domain": "your-domain.auth0.com",
-  "clientId": "your-client-id",
-  "audience": "http://your-audience-identifier",
-  "apiUrl": "http://localhost:7000"
-}

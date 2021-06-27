@@ -1,11 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-logout-button',
   templateUrl: './logout-button.component.html',
-  styles: [],
+  styleUrls: ['./logout-button.component.css'],
 })
 export class LogoutButtonComponent implements OnInit {
   constructor(

@@ -1,10 +1,15 @@
-import { MoviesComponent } from './pages/movies/movies.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+
 import { AuthGuard } from '@auth0/auth0-angular';
-import { HomeComponent } from 'src/app/pages/home/home.component';
-import { ProfileComponent } from 'src/app/pages/profile/profile.component';
-import { ActorsComponent } from 'src/app/pages/actors/actors.component';
+
+import { HomeComponent } from './pages/home/home.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { ActorComponent } from './pages/actor/actor.component';
+import { MovieComponent } from './pages/movie/movie.component';
+import { ActorCreateComponent } from './components/actor/actor-create/actor-create.component';
+import { ActorUpdateComponent } from './components/actor/actor-update/actor-update.component';
+import { ActorDeleteComponent } from './components/actor/actor-delete/actor-delete.component';
 
 const routes: Routes = [
   {
@@ -15,16 +20,31 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'actors',
-    component: ActorsComponent,
+    component: ActorComponent,
+    // canActivate: [AuthGuard],
+  },
+  {
+    path: 'actors/create',
+    component: ActorCreateComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'actors/update/:id',
+    component: ActorUpdateComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'actors/delete/:id',
+    component: ActorDeleteComponent,
     canActivate: [AuthGuard],
   },
   {
     path: 'movies',
-    component: MoviesComponent,
+    component: MovieComponent,
     canActivate: [AuthGuard],
   },
 ];

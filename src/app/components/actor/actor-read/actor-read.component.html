@@ -1,0 +1,42 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Age</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let actor of actors; let i = index">
+      <td>{{ actor.name }}</td>
+      <td>{{ actor.age }}</td>
+      <td>{{ actor.gender }}</td>
+      <td id="actions-group">
+        <button
+          type="button"
+          class="btn btn-outline-warning"
+          routerLink="/actors/update/{{ actor.id }}"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          routerLink="/actors/delete/{{ actor.id }}"
+        >
+          Remove
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-start">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
