@@ -1,9 +1,0 @@
-<mat-card>
-    <button *ngIf="(auth.isAuthenticated$ | async) === false" mat-raised-button (click)="loginWithRedirect()">
-        Log in
-    </button>
-
-    <button *ngIf="auth.isAuthenticated$ | async" mat-raised-button (click)="logout()">
-        Log out
-    </button>
-</mat-card>
