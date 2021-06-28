@@ -32,16 +32,20 @@ export class ActorUpdateComponent implements OnInit {
   }
 
   updateActor(): void {
-    this.actorService.update(this.actor.id, this.actor).subscribe(
-      (response) => {
-        console.log(response);
+    const data = {
+      name: this.actor.name,
+      age: this.actor.age,
+      available: this.actor.gender,
+    };
+
+    this.actorService.update(this.actor.id, data).subscribe(
+      () => {
+        this.router.navigate(['/actors']);
       },
       (error) => {
         console.log(error);
       }
     );
-
-    this.router.navigate(['/actors']);
   }
 
   cancel(): void {

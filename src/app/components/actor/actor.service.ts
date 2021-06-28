@@ -22,10 +22,10 @@ export class ActorService {
   }
 
   update(id, data): Observable<any> {
-    return this.http.patch(`${env.dev.apiUrl}/${id}`, data);
+    return this.http.patch(`${env.dev.apiUrl}/actors/${id}`, data);
   }
 
   delete(id): Observable<any> {
-    return this.http.delete(`${env.dev.apiUrl}/${id}`);
+    return this.http.delete(`${env.dev.apiUrl}/actors/${id}`);
   }
 }

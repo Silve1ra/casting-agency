@@ -8,7 +8,7 @@ import { ActorService } from '../actor.service';
   styleUrls: ['./actor-delete.component.css'],
 })
 export class ActorDeleteComponent implements OnInit {
-  id!: number;
+  actor = null;
 
   constructor(
     private actorService: ActorService,
@@ -17,12 +17,29 @@ export class ActorDeleteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.findOne(this.route.snapshot.paramMap.get('id'));
   }
 
-  async deleteActor(): Promise<any> {
-    this.actorService.delete(this.id);
-    this.router.navigate(['/actors']);
+  findOne(id): void {
+    this.actorService.findOne(id).subscribe(
+      (actor) => {
+        this.actor = actor.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  deleteActor(): void {
+    this.actorService.delete(this.actor.id).subscribe(
+      () => {
+        this.router.navigate(['/actors']);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   cancel(): void {
