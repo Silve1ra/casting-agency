@@ -1,4 +1,8 @@
-<div class="card">
+<div class="container" *ngIf="actor == null">
+  <app-loading></app-loading>
+</div>
+
+<div class="card" *ngIf="actor !== null">
   <!-- <div class="card-header">Featured</div> -->
   <div class="card-body">
     <h4 class="card-title">Update Actor</h4>

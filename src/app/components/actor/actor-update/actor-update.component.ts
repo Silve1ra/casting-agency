@@ -8,8 +8,7 @@ import { ActorService } from '../actor.service';
   styleUrls: ['./actor-update.component.css'],
 })
 export class ActorUpdateComponent implements OnInit {
-  actor: any;
-  id!: number;
+  actor = null;
 
   constructor(
     private actorService: ActorService,
@@ -18,16 +17,31 @@ export class ActorUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-    this.actorService.findOne(Number(this.id)).subscribe((actor) => {
-      this.actor = actor.data;
-    });
+    this.findOne(this.route.snapshot.paramMap.get('id'));
+  }
+
+  findOne(id): void {
+    this.actorService.findOne(id).subscribe(
+      (actor) => {
+        this.actor = actor.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   updateActor(): void {
-    this.actorService.update(this.id, this.actor).subscribe(() => {
-      this.router.navigate(['/actors']);
-    });
+    this.actorService.update(this.actor.id, this.actor).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    this.router.navigate(['/actors']);
   }
 
   cancel(): void {

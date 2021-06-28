@@ -18,16 +18,14 @@ export class ActorService {
   }
 
   create(data): Observable<any> {
-    console.log('creating actor');
-    console.log(data);
     return this.http.post(`${env.dev.apiUrl}/actors`, data);
   }
 
   update(id, data): Observable<any> {
-    return this.http.put(`${env.dev.apiUrl}/${id}`, data);
+    return this.http.patch(`${env.dev.apiUrl}/${id}`, data);
   }
 
-  async delete(id): Promise<any> {
+  delete(id): Observable<any> {
     return this.http.delete(`${env.dev.apiUrl}/${id}`);
   }
 }
