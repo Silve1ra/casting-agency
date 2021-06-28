@@ -18,6 +18,8 @@ export class ActorService {
   }
 
   create(data): Observable<any> {
+    console.log('creating actor');
+    console.log(data);
     return this.http.post(`${env.dev.apiUrl}/actors`, data);
   }
 

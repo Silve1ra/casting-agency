@@ -8,7 +8,11 @@ import { ActorService } from '../actor.service';
   styleUrls: ['./actor-create.component.css'],
 })
 export class ActorCreateComponent implements OnInit {
-  actor: any;
+  actor = {
+    name: '',
+    age: '',
+    gender: '',
+  };
   submitted = false;
 
   constructor(private actorService: ActorService, private router: Router) {}
@@ -16,12 +20,7 @@ export class ActorCreateComponent implements OnInit {
   ngOnInit(): void {}
 
   createActor(): void {
-    const data = {
-      name: this.actor.name,
-      description: this.actor.description,
-    };
-
-    this.actorService.create(data).subscribe(
+    this.actorService.create(this.actor).subscribe(
       (response) => {
         console.log(response);
         this.submitted = true;

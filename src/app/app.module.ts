@@ -18,6 +18,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { AuthModule, AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -25,7 +26,6 @@ import { ActorCreateComponent } from './components/actor/actor-create/actor-crea
 import { ActorUpdateComponent } from './components/actor/actor-update/actor-update.component';
 import { ActorReadComponent } from './components/actor/actor-read/actor-read.component';
 import { ActorDeleteComponent } from './components/actor/actor-delete/actor-delete.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +52,7 @@ import { ActorDeleteComponent } from './components/actor/actor-delete/actor-dele
     BrowserAnimationsModule,
     FontAwesomeModule,
     HttpClientModule,
+    FormsModule,
     AuthModule.forRoot({
       ...env.auth,
       httpInterceptor: {

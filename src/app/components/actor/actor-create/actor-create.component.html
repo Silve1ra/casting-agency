@@ -8,35 +8,60 @@
     </p>
 
     <form>
-      <div class="form-group row">
-        <label for="name" class="col-sm-2 col-form-label">Name</label>
-        <div class="col-sm-10">
-          <input class="form-control" id="name" />
+      <div class="submit-form">
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              required
+              [(ngModel)]="actor.name"
+              name="name"
+            />
+          </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <label for="age" class="col-sm-2 col-form-label">Age</label>
-        <div class="col-sm-10">
-          <input class="form-control" id="age" />
+
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Age</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="age"
+              required
+              [(ngModel)]="actor.age"
+              name="age"
+            />
+          </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <label for="gender" class="col-sm-2 col-form-label">Genger</label>
-        <div class="col-sm-10">
-          <input class="form-control" id="gender" />
+
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Gender</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="gender"
+              required
+              [(ngModel)]="actor.gender"
+              name="gender"
+            />
+          </div>
         </div>
-      </div>
-      <div class="actions-button">
-        <button type="submit" class="btn btn-primary" (click)="createActor()">
-          Save
-        </button>
-        <button
-          type="submit"
-          class="btn btn-outline-secondary"
-          (click)="cancel()"
-        >
-          Cancel
-        </button>
+        <div class="actions-button">
+          <button type="submit" class="btn btn-primary" (click)="createActor()">
+            Save
+          </button>
+          <button
+            type="submit"
+            class="btn btn-outline-secondary"
+            (click)="cancel()"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </form>
   </div>
