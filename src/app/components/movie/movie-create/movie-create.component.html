@@ -1,0 +1,55 @@
+<div class="card">
+  <!-- <div class="card-header">Featured</div> -->
+  <div class="card-body">
+    <h4 class="card-title">Create Movie</h4>
+    <p class="card-text">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+
+    <form>
+      <div class="submit-form">
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Title</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              required
+              [(ngModel)]="movie.title"
+              name="name"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Release Data</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="age"
+              required
+              [(ngModel)]="movie.release_date"
+              name="age"
+              placeholder="yyyy-mm-dd"
+            />
+          </div>
+        </div>
+        <div class="actions-button">
+          <button type="submit" class="btn btn-primary" (click)="createMovie()">
+            Save
+          </button>
+          <button
+            type="submit"
+            class="btn btn-outline-secondary"
+            (click)="cancel()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -10,6 +10,9 @@ import { MovieComponent } from './pages/movie/movie.component';
 import { ActorCreateComponent } from './components/actor/actor-create/actor-create.component';
 import { ActorUpdateComponent } from './components/actor/actor-update/actor-update.component';
 import { ActorDeleteComponent } from './components/actor/actor-delete/actor-delete.component';
+import { MovieCreateComponent } from './components/movie/movie-create/movie-create.component';
+import { MovieUpdateComponent } from './components/movie/movie-update/movie-update.component';
+import { MovieDeleteComponent } from './components/movie/movie-delete/movie-delete.component';
 
 const routes: Routes = [
   {
@@ -45,6 +48,21 @@ const routes: Routes = [
   {
     path: 'movies',
     component: MovieComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'movies/create',
+    component: MovieCreateComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'movies/update/:id',
+    component: MovieUpdateComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'movies/delete/:id',
+    component: MovieDeleteComponent,
     canActivate: [AuthGuard],
   },
 ];

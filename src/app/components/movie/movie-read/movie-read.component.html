@@ -12,29 +12,26 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Age</th>
-        <th scope="col">Gender</th>
-        <th scope="col">Actions</th>
+        <th scope="col">Title</th>
+        <th scope="col">Release Date</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let actor of actors; let i = index">
-        <td>{{ actor.name }}</td>
-        <td>{{ actor.age }}</td>
-        <td>{{ actor.gender }}</td>
+      <tr *ngFor="let movie of movies; let i = index">
+        <td>{{ movie.title }}</td>
+        <td>{{ movie.release_date }}</td>
         <td id="actions-group">
           <button
             type="button"
             class="btn btn-outline-warning"
-            routerLink="/actors/update/{{ actor.id }}"
+            routerLink="/movies/update/{{ movie.id }}"
           >
             Update
           </button>
           <button
             type="button"
             class="btn btn-outline-danger"
-            routerLink="/actors/delete/{{ actor.id }}"
+            routerLink="/movies/delete/{{ movie.id }}"
           >
             Remove
           </button>

@@ -1,0 +1,59 @@
+<div class="container" *ngIf="movie == null">
+  <app-loading></app-loading>
+</div>
+
+<div class="card" *ngIf="movie !== null">
+  <!-- <div class="card-header">Featured</div> -->
+  <div class="card-body">
+    <h4 class="card-title">Update Movie</h4>
+    <p class="card-text">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+
+    <form>
+      <div class="submit-form">
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Title</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              required
+              [(ngModel)]="movie.title"
+              name="title"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="name" class="col-sm-2 col-form-label">Release Date</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="release_date"
+              required
+              [(ngModel)]="movie.release_date"
+              name="release_date"
+            />
+          </div>
+        </div>
+
+        <div class="actions-button">
+          <button type="submit" class="btn btn-primary" (click)="updateMovie()">
+            Update
+          </button>
+          <button
+            type="submit"
+            class="btn btn-outline-secondary"
+            (click)="cancel()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

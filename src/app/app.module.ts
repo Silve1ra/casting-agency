@@ -26,6 +26,10 @@ import { ActorCreateComponent } from './components/actor/actor-create/actor-crea
 import { ActorUpdateComponent } from './components/actor/actor-update/actor-update.component';
 import { ActorReadComponent } from './components/actor/actor-read/actor-read.component';
 import { ActorDeleteComponent } from './components/actor/actor-delete/actor-delete.component';
+import { MovieCreateComponent } from './components/movie/movie-create/movie-create.component';
+import { MovieUpdateComponent } from './components/movie/movie-update/movie-update.component';
+import { MovieReadComponent } from './components/movie/movie-read/movie-read.component';
+import { MovieDeleteComponent } from './components/movie/movie-delete/movie-delete.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +49,10 @@ import { ActorDeleteComponent } from './components/actor/actor-delete/actor-dele
     ActorUpdateComponent,
     ActorReadComponent,
     ActorDeleteComponent,
+    MovieCreateComponent,
+    MovieUpdateComponent,
+    MovieReadComponent,
+    MovieDeleteComponent,
   ],
   imports: [
     BrowserModule,
