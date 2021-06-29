@@ -23,12 +23,10 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    // canActivate: [AuthGuard],
   },
   {
     path: 'actors',
     component: ActorComponent,
-    // canActivate: [AuthGuard],
   },
   {
     path: 'actors/create',
@@ -48,7 +46,6 @@ const routes: Routes = [
   {
     path: 'movies',
     component: MovieComponent,
-    canActivate: [AuthGuard],
   },
   {
     path: 'movies/create',

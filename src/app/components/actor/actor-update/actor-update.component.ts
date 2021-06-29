@@ -35,7 +35,7 @@ export class ActorUpdateComponent implements OnInit {
     const data = {
       name: this.actor.name,
       age: this.actor.age,
-      available: this.actor.gender,
+      gender: this.actor.gender,
     };
 
     this.actorService.update(this.actor.id, data).subscribe(
