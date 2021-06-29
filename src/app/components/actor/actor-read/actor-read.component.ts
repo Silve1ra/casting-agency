@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ActorService } from '../actor.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-actor-read',
@@ -9,7 +10,12 @@ import { ActorService } from '../actor.service';
 })
 export class ActorReadComponent implements OnInit {
   actors: any;
-  constructor(private router: Router, private actorService: ActorService) {}
+
+  constructor(
+    private router: Router,
+    public auth: AuthService,
+    private actorService: ActorService
+  ) {}
 
   ngOnInit(): void {
     this.readActors();
@@ -24,5 +30,9 @@ export class ActorReadComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  navigateToProductCreate(): void {
+    this.router.navigate(['/actors/create']);
   }
 }

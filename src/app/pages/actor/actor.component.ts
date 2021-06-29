@@ -6,11 +6,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./actor.component.css'],
 })
 export class ActorComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor() {}
 
   ngOnInit(): void {}
-
-  navigateToProductCreate(): void {
-    this.router.navigate(['/actors/create']);
-  }
 }

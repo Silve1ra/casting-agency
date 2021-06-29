@@ -39,13 +39,12 @@ export class ActorUpdateComponent implements OnInit {
     };
 
     this.actorService.update(this.actor.id, data).subscribe(
-      () => {
-        this.router.navigate(['/actors']);
-      },
+      () => {},
       (error) => {
         console.log(error);
       }
     );
+    this.router.navigate(['/actors']);
   }
 
   cancel(): void {
